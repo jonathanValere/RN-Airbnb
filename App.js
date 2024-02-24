@@ -1,9 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import SignInScreen from "./screens/SIgnInScreen";
+import SignUpScreen from "./screens/SignUpScreen";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View>
-      <Text>Hello world</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="signin" component={SignInScreen} />
+        <Stack.Screen name="signup" component={SignUpScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
