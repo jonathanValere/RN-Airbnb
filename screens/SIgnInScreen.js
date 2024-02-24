@@ -4,19 +4,20 @@ import {
   StyleSheet,
   TextInput,
   Pressable,
-  KeyboardAvoidingView,
   TouchableHighlight,
 } from "react-native";
 import Title from "../components/Title";
 import { useState } from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Title title="Sign in" />
+      {/* Formulaire */}
       <View style={styles.form}>
         <TextInput
           style={styles.input}
@@ -34,6 +35,7 @@ export default function SignInScreen({ navigation }) {
           onChangeText={setPassword}
         />
       </View>
+      {/* Bouton de validation */}
       <View style={styles.blocBtn}>
         <TouchableHighlight onPress={() => alert("Sign in pressed!")}>
           <Text style={styles.btn}>Sign In</Text>
@@ -42,7 +44,7 @@ export default function SignInScreen({ navigation }) {
           <Text style={styles.goToRegister}>No account ? register</Text>
         </Pressable>
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -66,7 +68,6 @@ const styles = StyleSheet.create({
     width: 300,
   },
   blocBtn: {
-    marginVertical: 30,
     alignItems: "center",
   },
   btn: {
