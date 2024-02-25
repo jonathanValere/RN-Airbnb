@@ -4,7 +4,7 @@ import { FontAwesome6 } from "@expo/vector-icons";
 export default function ({ title }) {
   return (
     <View style={styles.container}>
-      <FontAwesome6 name="airbnb" size={120} color="#EB5A62" />
+      <FontAwesome6 name="airbnb" size={100} color="#EB5A62" />
       <Text style={styles.title}>{title}</Text>
     </View>
   );
@@ -13,12 +13,12 @@ export default function ({ title }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    marginTop: 50,
+    paddingTop: 100,
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    marginTop: 20,
+    marginTop: 10,
     color: "#737373",
   },
 });

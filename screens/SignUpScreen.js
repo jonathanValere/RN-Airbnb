@@ -1,11 +1,129 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  TouchableHighlight,
+} from "react-native";
+import Title from "../components/Title";
+import { useState } from "react";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-export default function SignUpScreen() {
+export default function SignInScreen({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [description, setDescription] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   return (
-    <View>
-      <Text>SignUpScreen</Text>
-    </View>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+      <Title title="Sign up" />
+      {/* Formulaire */}
+      <View style={styles.form}>
+        <TextInput
+          style={styles.input}
+          placeholder="email"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          autoComplete="off"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="username"
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+          autoComplete="off"
+        />
+        <TextInput
+          style={[styles.input, styles.multiline]}
+          placeholder="Describe yourself in a few words..."
+          value={description}
+          onChangeText={setDescription}
+          autoCapitalize="none"
+          autoComplete="off"
+          multiline
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm password"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry
+        />
+      </View>
+      {/* Bouton de validation */}
+      <View style={styles.blocBtn}>
+        <TouchableHighlight onPress={() => alert("Sign up pressed!")}>
+          <Text style={styles.btn}>Sign Up</Text>
+        </TouchableHighlight>
+        <Pressable onPress={() => navigation.navigate("signin")}>
+          <Text style={styles.goToSignin}>
+            Already have an account ? Sign in
+          </Text>
+        </Pressable>
+      </View>
+    </KeyboardAwareScrollView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    paddingBottom: 30,
+  },
+  form: {
+    gap: 20,
+    backgroundColor: "white",
+  },
+  input: {
+    backgroundColor: "white",
+    paddingVertical: 10,
+    borderBottomWidth: 0.8,
+    borderBottomColor: "#EB5A62",
+    fontSize: 14,
+    width: 300,
+  },
+  multiline: {
+    minHeight: 90,
+    borderWidth: 0.8,
+    borderColor: "#EB5A62",
+    padding: 10,
+    textAlignVertical: "top",
+    marginTop: 20,
+  },
+  blocBtn: {
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  btn: {
+    borderColor: "#EB5A62",
+    borderWidth: 2.5,
+    borderRadius: 30,
+    overflow: "hidden", // Permet d'appliquer un border radius pour iOS
+    paddingVertical: 16,
+    paddingHorizontal: 60,
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#737373",
+    backgroundColor: "white",
+  },
+  goToSignin: {
+    marginTop: 15,
+    color: "#737373",
+    fontSize: 11,
+  },
+});

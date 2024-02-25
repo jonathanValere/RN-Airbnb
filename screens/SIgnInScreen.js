@@ -52,11 +52,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     backgroundColor: "white",
+    paddingBottom: 30,
   },
   form: {
-    gap: 30,
+    gap: 20,
     backgroundColor: "white",
   },
   input: {
@@ -69,21 +70,22 @@ const styles = StyleSheet.create({
   },
   blocBtn: {
     alignItems: "center",
+    marginBottom: 10,
   },
   btn: {
     borderColor: "#EB5A62",
     borderWidth: 2.5,
     borderRadius: 30,
     overflow: "hidden", // Permet d'appliquer un border radius pour iOS
-    paddingVertical: 20,
-    paddingHorizontal: 80,
-    fontSize: 15,
+    paddingVertical: 16,
+    paddingHorizontal: 60,
+    fontSize: 14,
     fontWeight: "bold",
     color: "#737373",
     backgroundColor: "white",
   },
   goToRegister: {
-    marginTop: 20,
+    marginTop: 15,
     color: "#737373",
     fontSize: 11,
   },
