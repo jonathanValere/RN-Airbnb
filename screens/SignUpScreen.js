@@ -6,9 +6,11 @@ import {
   Pressable,
   TouchableHighlight,
 } from "react-native";
-import Title from "../components/Title";
 import { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import axios from "axios";
+
+import Title from "../components/Title";
 
 export default function SignInScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -16,6 +18,50 @@ export default function SignInScreen({ navigation }) {
   const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Gestion SignupSubmit
+  const submitSignUp = async () => {
+    try {
+      // Gestion de tous les champs vides
+      if (
+        !email ||
+        !username ||
+        !description ||
+        !password ||
+        !confirmPassword
+      ) {
+        return setErrorMessage("Please fill all fields.");
+      }
+
+      // Gestion du mot de passe différent
+      if (password !== confirmPassword) {
+        return setErrorMessage("Passwords must be the same");
+      }
+
+      // Envoie de la requête
+      const response = await axios.post(
+        "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/sign_up",
+        {
+          email: email,
+          username: username,
+          description: description,
+          password: password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      // if (response.data) {
+      //   navigation.navigate("signin");
+      // }
+      alert("Signup successfull");
+      navigation.navigate("signin");
+    } catch (error) {
+      return alert(error.response.data.error);
+    }
+  };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -64,10 +110,11 @@ export default function SignInScreen({ navigation }) {
       </View>
       {/* Bouton de validation */}
       <View style={styles.blocBtn}>
-        <TouchableHighlight onPress={() => alert("Sign up pressed!")}>
+        {errorMessage && <Text style={styles.error}>{errorMessage}</Text>}
+        <TouchableHighlight onPress={submitSignUp}>
           <Text style={styles.btn}>Sign Up</Text>
         </TouchableHighlight>
-        <Pressable onPress={() => navigation.navigate("signin")}>
+        <Pressable onPress={() => navigation.navigate("Signin")}>
           <Text style={styles.goToSignin}>
             Already have an account ? Sign in
           </Text>
@@ -125,5 +172,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
     color: "#737373",
     fontSize: 11,
+  },
+  error: {
+    color: "#EB5A62",
+    marginBottom: 10,
+    fontSize: 12,
   },
 });

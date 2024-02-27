@@ -6,13 +6,59 @@ import {
   Pressable,
   TouchableHighlight,
 } from "react-native";
-import Title from "../components/Title";
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import axios from "axios";
 
-export default function SignInScreen({ navigation }) {
+import Title from "../components/Title";
+
+export default function SignInScreen({ navigation, setToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(false);
+
+  // Gestion de l'authentification --
+  const handleSignIn = async () => {
+    try {
+      // Vérification que les champs sont remplis
+      if (!email || !password) {
+        return setErrorMessage(!errorMessage);
+      }
+      // Envoie de la requête d'authentification
+      const response = await axios.post(
+        "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/log_in",
+        {
+          email: email,
+          password: password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (
+        response.data.email === "nono@airbnb-api.com" &&
+        password === "pass"
+      ) {
+        setErrorMessage(false);
+        // Stocker le token dans la mémoire de l'appareil
+        await setToken(response.data.token);
+        // await AsyncStorage.setItem("userToken", response.data.token);
+        alert(
+          `Welcome back ${
+            response.data.username
+          } ! Our ${response.data.description.toLowerCase()}`
+        );
+        navigation.navigate("Tab");
+      } else {
+        alert("Email or password error");
+      }
+    } catch (error) {
+      console.log("Error >>>>", error.response);
+    }
+  };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -37,10 +83,13 @@ export default function SignInScreen({ navigation }) {
       </View>
       {/* Bouton de validation */}
       <View style={styles.blocBtn}>
-        <TouchableHighlight onPress={() => alert("Sign in pressed!")}>
+        {errorMessage && (
+          <Text style={styles.error}>Please fill all fields</Text>
+        )}
+        <TouchableHighlight onPress={handleSignIn}>
           <Text style={styles.btn}>Sign In</Text>
         </TouchableHighlight>
-        <Pressable onPress={() => navigation.navigate("signup")}>
+        <Pressable onPress={() => navigation.navigate("Signup")}>
           <Text style={styles.goToRegister}>No account ? register</Text>
         </Pressable>
       </View>
@@ -88,5 +137,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
     color: "#737373",
     fontSize: 11,
+  },
+  error: {
+    color: "#EB5A62",
+    marginBottom: 10,
+    fontSize: 12,
   },
 });
