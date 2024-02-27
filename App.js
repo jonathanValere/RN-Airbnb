@@ -34,6 +34,26 @@ export default function App() {
     setUserToken(token);
   };
 
+  useEffect(() => {
+    // Fetch the token from storage then navigate to our appropriate place
+    const bootstrapAsync = async () => {
+      // We should also handle error for production apps
+      const userToken = await AsyncStorage.getItem("userToken");
+
+      // This will switch to the App screen or Auth screen and this loading
+      // screen will be unmounted and thrown away.
+      setUserToken(userToken);
+
+      setIsLoading(false);
+    };
+
+    bootstrapAsync();
+  }, []);
+
+  if (isLoading === true) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -50,7 +70,9 @@ export default function App() {
         ) : (
           // Screens pour les utilisateurs loggés
           <Stack.Group screenOptions={screenOptionsTab}>
-            <Stack.Screen name="Tab" component={TabScreen} />
+            <Stack.Screen name="Tab">
+              {(props) => <TabScreen {...props} setToken={setToken} />}
+            </Stack.Screen>
           </Stack.Group>
         )}
       </Stack.Navigator>

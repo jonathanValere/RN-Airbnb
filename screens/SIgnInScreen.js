@@ -34,29 +34,20 @@ export default function SignInScreen({ navigation, setToken }) {
         },
         {
           headers: {
+            Accept: "application/json",
             "Content-Type": "application/json",
           },
         }
       );
-      if (
-        response.data.email === "nono@airbnb-api.com" &&
-        password === "pass"
-      ) {
+      if (response.data.email === email && password === "pass") {
         setErrorMessage(false);
         // Stocker le token dans la mémoire de l'appareil
-        await setToken(response.data.token);
-        // await AsyncStorage.setItem("userToken", response.data.token);
-        alert(
-          `Welcome back ${
-            response.data.username
-          } ! Our ${response.data.description.toLowerCase()}`
-        );
-        navigation.navigate("Tab");
+        setToken(response.data.token);
       } else {
         alert("Email or password error");
       }
     } catch (error) {
-      console.log("Error >>>>", error.response);
+      console.log("Error >>>>", error.response.data.error);
     }
   };
 

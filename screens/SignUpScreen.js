@@ -12,7 +12,7 @@ import axios from "axios";
 
 import Title from "../components/Title";
 
-export default function SignInScreen({ navigation }) {
+export default function SignInScreen({ navigation, setToken }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
@@ -49,15 +49,14 @@ export default function SignInScreen({ navigation }) {
           password: password,
         },
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
         }
       );
-
-      // if (response.data) {
-      //   navigation.navigate("signin");
-      // }
-      alert("Signup successfull");
-      navigation.navigate("signin");
+      setErrorMessage("");
+      setToken(response.data.token);
     } catch (error) {
       return alert(error.response.data.error);
     }
