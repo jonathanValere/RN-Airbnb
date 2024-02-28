@@ -71,7 +71,13 @@ export default function App() {
           // Screens pour les utilisateurs loggés
           <Stack.Group screenOptions={screenOptionsTab}>
             <Stack.Screen name="Tab">
-              {(props) => <TabScreen {...props} setToken={setToken} />}
+              {(props) => (
+                <TabScreen
+                  {...props}
+                  setToken={setToken}
+                  userToken={userToken}
+                />
+              )}
             </Stack.Screen>
           </Stack.Group>
         )}

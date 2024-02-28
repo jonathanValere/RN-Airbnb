@@ -1,32 +1,42 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import HomeScreen from "./HomeScreen";
-import SettingsScreen from "./SettingsScreen";
+import MyProfile from "./MyProfileScreen";
+import AroundMeScreen from "./AroundMeScreen";
 
 const Tab = createBottomTabNavigator();
 
-export default function TabScreen({ setToken }) {
+export default function TabScreen({ setToken, userToken }) {
   const screenOptions = {
-    tabBarStyle: { backgroundColor: "#EB5A62" },
-    tabBarLabelStyle: { fontSize: 12, color: "white" },
+    tabBarStyle: { backgroundColor: "#fff" },
+    tabBarLabelStyle: { fontSize: 12, color: "#EB5A62" },
   };
-
   return (
     <Tab.Navigator initialRouteName="Home" screenOptions={screenOptions}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: () => <Ionicons name="home" />,
+          tabBarIcon: () => <Ionicons name="home" size={20} color="#EB5A62" />,
         }}
       />
       <Tab.Screen
-        name="Settings"
+        name="Around Me"
         options={{
-          tabBarBadge: 3,
+          tabBarIcon: () => (
+            <AntDesign name="enviromento" size={20} color="#EB5A62" />
+          ),
         }}
       >
-        {(props) => <SettingsScreen {...props} setToken={setToken} />}
+        {(props) => <AroundMeScreen {...props} />}
+      </Tab.Screen>
+      <Tab.Screen
+        name="My Profile"
+        options={{
+          tabBarIcon: () => <AntDesign name="user" size={20} color="#EB5A62" />,
+        }}
+      >
+        {(props) => <MyProfile {...props} setToken={setToken} />}
       </Tab.Screen>
     </Tab.Navigator>
   );
