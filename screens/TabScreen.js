@@ -2,6 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign, FontAwesome6 } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import colors from "../utils/Colors";
+
 import HomeScreen from "./HomeScreen";
 import RoomScreen from "./RoomScreen";
 import MyProfile from "./MyProfileScreen";
@@ -17,7 +19,7 @@ export default function TabScreen({ navigation, setToken }) {
     tabBarLabelStyle: { fontSize: 12, color: "#000" },
     headerTitle: () => (
       <Pressable onPress={() => navigation.navigate("HomeScreen")}>
-        <FontAwesome6 name="airbnb" size={30} color="#EB5A62" />
+        <FontAwesome6 name="airbnb" size={30} color={colors.PRIMARY} />
       </Pressable>
     ),
     headerLeft: () => {
@@ -45,7 +47,7 @@ export default function TabScreen({ navigation, setToken }) {
               <Ionicons
                 name="home"
                 size={20}
-                color={props.focused === true ? "#EB5A62" : "#000"}
+                color={props.focused === true ? colors.PRIMARY : "#000"}
               />
             );
           },
@@ -66,7 +68,7 @@ export default function TabScreen({ navigation, setToken }) {
             <AntDesign
               name="enviromento"
               size={20}
-              color={props.focused === true ? "#EB5A62" : "#000"}
+              color={props.focused === true ? colors.PRIMARY : "#000"}
             />
           ),
         }}
@@ -80,7 +82,7 @@ export default function TabScreen({ navigation, setToken }) {
             <AntDesign
               name="user"
               size={20}
-              color={props.focused === true ? "#EB5A62" : "#000"}
+              color={props.focused === true ? colors.PRIMARY : "#000"}
             />
           ),
         }}

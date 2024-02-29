@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { View, StyleSheet, ActivityIndicator, FlatList } from "react-native";
 
+import colors from "../utils/Colors";
+
 // Components ---
 import Room from "../components/Room";
 
@@ -53,12 +55,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    backgroundColor: "#fff",
+    backgroundColor: colors.WHITE,
   },
   separator: {
     height: 0.5,
     width: "100%",
-    backgroundColor: "grey",
+    backgroundColor: colors.LIGHTGREY,
     marginBottom: 20,
   },
 });

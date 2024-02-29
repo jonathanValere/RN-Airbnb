@@ -6,6 +6,7 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
+import colors from "../utils/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 
 export default function RoomScreen({ route }) {
@@ -13,9 +14,13 @@ export default function RoomScreen({ route }) {
   let ratingsStar = [];
   for (let numStar = 0; numStar < 5; numStar++) {
     if (numStar < data.ratingValue) {
-      ratingsStar.push(<FontAwesome name="star" size={18} color="#FFB100" />);
+      ratingsStar.push(
+        <FontAwesome name="star" size={18} color={colors.YELLOW} />
+      );
     } else {
-      ratingsStar.push(<FontAwesome name="star" size={18} color="#BBBBBB" />);
+      ratingsStar.push(
+        <FontAwesome name="star" size={18} color={colors.LIGHTGREY} />
+      );
     }
   }
 
@@ -64,7 +69,7 @@ export default function RoomScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.WHITE,
     flex: 1,
   },
   containerText: {
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 20,
     backgroundColor: "black",
-    color: "#fff",
+    color: colors.WHITE,
     paddingHorizontal: 15,
     paddingVertical: 5,
     position: "absolute",
@@ -98,7 +103,7 @@ const styles = StyleSheet.create({
   },
   reviews: {
     fontSize: 14,
-    color: "grey",
+    color: colors.LIGHTGREY,
   },
   thumbnail: {
     resizeMode: "cover",

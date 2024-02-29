@@ -10,6 +10,8 @@ import { useState } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
 
+import colors from "../utils/Colors";
+
 import Title from "../components/Title";
 
 export default function SignInScreen({ navigation, setToken }) {
@@ -92,18 +94,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "white",
+    backgroundColor: colors.WHITE,
     paddingBottom: 30,
   },
   form: {
     gap: 20,
-    backgroundColor: "white",
+    backgroundColor: colors.WHITE,
   },
   input: {
-    backgroundColor: "white",
+    backgroundColor: colors.WHITE,
     paddingVertical: 10,
     borderBottomWidth: 0.8,
-    borderBottomColor: "#EB5A62",
+    borderBottomColor: colors.PRIMARY,
     fontSize: 14,
     width: 300,
   },
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   btn: {
-    borderColor: "#EB5A62",
+    borderColor: colors.PRIMARY,
     borderWidth: 2.5,
     borderRadius: 30,
     overflow: "hidden", // Permet d'appliquer un border radius pour iOS
@@ -120,16 +122,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 60,
     fontSize: 14,
     fontWeight: "bold",
-    color: "#737373",
-    backgroundColor: "white",
+    color: colors.LIGHTGREY,
+    backgroundColor: colors.WHITE,
   },
   goToRegister: {
     marginTop: 15,
-    color: "#737373",
+    color: colors.LIGHTGREY,
     fontSize: 11,
   },
   error: {
-    color: "#EB5A62",
+    color: colors.PRIMARY,
     marginBottom: 10,
     fontSize: 12,
   },

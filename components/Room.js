@@ -3,6 +3,8 @@ import axios from "axios";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
+import colors from "../utils/Colors";
+
 export default function Room({
   title,
   photos,
@@ -18,9 +20,13 @@ export default function Room({
   let ratingsStar = [];
   for (let numStar = 0; numStar < 5; numStar++) {
     if (numStar < ratings) {
-      ratingsStar.push(<FontAwesome name="star" size={16} color="#FFB100" />);
+      ratingsStar.push(
+        <FontAwesome name="star" size={16} color={colors.YELLOW} />
+      );
     } else {
-      ratingsStar.push(<FontAwesome name="star" size={16} color="#BBBBBB" />);
+      ratingsStar.push(
+        <FontAwesome name="star" size={16} color={colors.LIGHTGREY} />
+      );
     }
   }
   // -----
@@ -50,7 +56,9 @@ export default function Room({
           <View style={styles.ratingsAndReviews}>
             <Text style={styles.stars}>
               {ratingsStar.map((item, index) => (
-                <Text key={index}>{item}</Text>
+                <Text key={index} style={styles.star}>
+                  {item}
+                </Text>
               ))}
             </Text>
             <Text style={styles.reviews}>{reviews} Reviews</Text>
@@ -65,7 +73,7 @@ export default function Room({
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    backgroundColor: "#fff",
+    backgroundColor: colors.WHITE,
   },
   room: {
     paddingVertical: 10,
@@ -74,9 +82,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   price: {
-    fontSize: 20,
+    fontSize: 16,
     backgroundColor: "black",
-    color: "#fff",
+    color: colors.WHITE,
     paddingHorizontal: 15,
     paddingVertical: 5,
     position: "absolute",
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
   },
   reviews: {
     fontSize: 14,
-    color: "grey",
+    color: colors.LIGHTGREY,
   },
   thumbnail: {
     resizeMode: "cover",
