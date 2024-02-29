@@ -37,9 +37,7 @@ export default function RoomScreen({ route }) {
       <View style={styles.containerText}>
         <View style={styles.blocReviewsAndAvatar}>
           <View>
-            <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-              {data.title}
-            </Text>
+            <Text style={styles.title}>{data.title}</Text>
             <View style={styles.ratingsAndReviews}>
               <Text style={styles.stars}>
                 {ratingsStar.map((item, index) => (
@@ -54,7 +52,9 @@ export default function RoomScreen({ route }) {
             style={styles.avatar}
           />
         </View>
-        <Text style={styles.description}>{data.description}</Text>
+        <Text style={styles.description} numberOfLines={3}>
+          {data.description}
+        </Text>
       </View>
     </ScrollView>
   );
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     width: 250,
     marginBottom: 15,
+    lineHeight: 22,
   },
   stars: {
     marginRight: 10,
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   },
   thumbnail: {
     resizeMode: "cover",
-    width: 370,
+    width: 400,
   },
   blocReviewsAndAvatar: {
     flexDirection: "row",
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   description: {
-    lineHeight: 20,
+    lineHeight: 22,
+    fontSize: 16,
   },
 });

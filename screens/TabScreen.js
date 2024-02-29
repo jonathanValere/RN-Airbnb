@@ -20,6 +20,14 @@ export default function TabScreen({ navigation, setToken }) {
         <FontAwesome6 name="airbnb" size={30} color="#EB5A62" />
       </Pressable>
     ),
+    headerLeft: (props) => {
+      console.log(props);
+      return (
+        <Pressable onPress={() => navigation.goBack()}>
+          <Text>Go back</Text>
+        </Pressable>
+      );
+    },
   };
   return (
     <Tab.Navigator initialRouteName="Home" screenOptions={screenOptions}>
@@ -38,7 +46,7 @@ export default function TabScreen({ navigation, setToken }) {
         }}
       >
         {() => (
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Navigator>
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="Room" component={RoomScreen} />
           </Stack.Navigator>
