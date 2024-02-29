@@ -9,8 +9,9 @@ import {
   Pressable,
   Image,
 } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [listRooms, setListRooms] = useState([]);
 
@@ -31,19 +32,34 @@ export default function HomeScreen() {
   }, []);
 
   const Room = ({ title, photos, price, avatar, reviews, ratings }) => {
+    let ratingsStar = [];
+    for (let numStar = 0; numStar < 5; numStar++) {
+      if (numStar < ratings) {
+        ratingsStar.push(<FontAwesome name="star" size={16} color="#FFB100" />);
+      } else {
+        ratingsStar.push(<FontAwesome name="star" size={16} color="#BBBBBB" />);
+      }
+    }
+
     return (
-      <Pressable onPress={() => alert(`Go to ${title}`)} style={styles.room}>
+      <Pressable onPress={() => navigation.navigate("Room")}>
         <View style={styles.blocImage}>
           <Image source={{ uri: photos }} style={styles.thumbnail} />
-          <Text>{price}</Text>
+          <Text style={styles.price}>{price} €</Text>
         </View>
-        <View>
+        <View style={styles.blocReviewsAndAvatar}>
           <View>
-            <Text>{title}</Text>
-            <Text>
-              <Text>{ratings} étoiles</Text>
-              {reviews} Reviews
+            <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+              {title}
             </Text>
+            <View style={styles.ratingsAndReviews}>
+              <Text style={styles.stars}>
+                {ratingsStar.map((item, index) => (
+                  <Text key={index}>{item}</Text>
+                ))}
+              </Text>
+              <Text style={styles.reviews}>{reviews} Reviews</Text>
+            </View>
           </View>
           <Image source={{ uri: avatar }} style={styles.avatar} />
         </View>
@@ -69,6 +85,7 @@ export default function HomeScreen() {
             reviews={item.reviews}
           />
         )}
+        ItemSeparatorComponent={() => <View style={styles.separator}></View>}
       />
     </View>
   );
@@ -77,27 +94,59 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
+    backgroundColor: "#fff",
   },
   room: {
     paddingVertical: 10,
   },
   blocImage: {
-    backgroundColor: "pink",
     width: "100%",
   },
-  title: {
+  price: {
     fontSize: 20,
+    backgroundColor: "black",
+    color: "#fff",
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    position: "absolute",
+    bottom: 20,
+  },
+  title: {
+    fontSize: 18,
     fontWeight: "bold",
-    textTransform: "uppercase",
+    width: 250,
+    marginBottom: 15,
+  },
+  stars: {
+    marginRight: 10,
+  },
+  reviews: {
+    fontSize: 14,
+    color: "grey",
   },
   thumbnail: {
     resizeMode: "cover",
     width: "100%",
     height: 190,
   },
+  blocReviewsAndAvatar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 12,
+    alignItems: "center",
+  },
+  ratingsAndReviews: {
+    alignItems: "center",
+    flexDirection: "row",
+  },
   avatar: {
-    height: 60,
-    width: 60,
+    height: 65,
+    width: 65,
     borderRadius: 50,
+  },
+  separator: {
+    height: 0.3,
+    width: "100%",
+    backgroundColor: "grey",
   },
 });
