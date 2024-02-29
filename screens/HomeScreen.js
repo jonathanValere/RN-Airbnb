@@ -157,8 +157,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   separator: {
-    height: 0.3,
+    height: 0.5,
     width: "100%",
     backgroundColor: "grey",
+    marginBottom: 20,
   },
 });

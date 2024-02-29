@@ -20,43 +20,45 @@ export default function RoomScreen({ route }) {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.blocImage}>
-        <FlatList
-          data={data.photos}
-          keyExtractor={(item) => item.picture_id}
-          renderItem={({ item }) => {
-            return (
-              <Image source={{ uri: item.url }} style={styles.thumbnail} />
-            );
-          }}
-          horizontal
-        />
-        <Text style={styles.price}>{data.price} €</Text>
-      </View>
-      <View style={styles.containerText}>
-        <View style={styles.blocReviewsAndAvatar}>
-          <View>
-            <Text style={styles.title}>{data.title}</Text>
-            <View style={styles.ratingsAndReviews}>
-              <Text style={styles.stars}>
-                {ratingsStar.map((item, index) => (
-                  <Text key={index}>{item}</Text>
-                ))}
-              </Text>
-              <Text style={styles.reviews}>{data.reviews} Reviews</Text>
-            </View>
-          </View>
-          <Image
-            source={{ uri: data.user.account.photo.url }}
-            style={styles.avatar}
+    <>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.blocImage}>
+          <FlatList
+            data={data.photos}
+            keyExtractor={(item) => item.picture_id}
+            renderItem={({ item }) => {
+              return (
+                <Image source={{ uri: item.url }} style={styles.thumbnail} />
+              );
+            }}
+            horizontal
           />
+          <Text style={styles.price}>{data.price} €</Text>
         </View>
-        <Text style={styles.description} numberOfLines={3}>
-          {data.description}
-        </Text>
-      </View>
-    </ScrollView>
+        <View style={styles.containerText}>
+          <View style={styles.blocReviewsAndAvatar}>
+            <View>
+              <Text style={styles.title}>{data.title}</Text>
+              <View style={styles.ratingsAndReviews}>
+                <Text style={styles.stars}>
+                  {ratingsStar.map((item, index) => (
+                    <Text key={index}>{item}</Text>
+                  ))}
+                </Text>
+                <Text style={styles.reviews}>{data.reviews} Reviews</Text>
+              </View>
+            </View>
+            <Image
+              source={{ uri: data.user.account.photo.url }}
+              style={styles.avatar}
+            />
+          </View>
+          <Text style={styles.description} numberOfLines={3}>
+            {data.description}
+          </Text>
+        </View>
+      </ScrollView>
+    </>
   );
 }
 
