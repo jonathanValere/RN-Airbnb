@@ -10,10 +10,9 @@ import { FontAwesome } from "@expo/vector-icons";
 
 export default function RoomScreen({ route }) {
   const data = route.params.dataRoom;
-  // console.log(JSON.stringify(data, null, 2));
   let ratingsStar = [];
   for (let numStar = 0; numStar < 5; numStar++) {
-    if (numStar < data.ratings) {
+    if (numStar < data.ratingValue) {
       ratingsStar.push(<FontAwesome name="star" size={18} color="#FFB100" />);
     } else {
       ratingsStar.push(<FontAwesome name="star" size={18} color="#BBBBBB" />);
@@ -23,14 +22,12 @@ export default function RoomScreen({ route }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.blocImage}>
-        {/* <Image source={{ uri: data.photos[0].url }} style={styles.thumbnail} /> */}
         <FlatList
           data={data.photos}
           keyExtractor={(item) => item.picture_id}
-          renderItem={(item) => {
-            // console.log(item.item);
+          renderItem={({ item }) => {
             return (
-              <Image source={{ uri: item.item.url }} style={styles.thumbnail} />
+              <Image source={{ uri: item.url }} style={styles.thumbnail} />
             );
           }}
           horizontal
@@ -77,7 +74,6 @@ const styles = StyleSheet.create({
   blocImage: {
     width: "100%",
     height: 250,
-    // backgroundColor: "blue",
   },
   price: {
     fontSize: 20,
@@ -103,8 +99,7 @@ const styles = StyleSheet.create({
   },
   thumbnail: {
     resizeMode: "cover",
-    width: "100%",
-    height: "100%",
+    width: 370,
   },
   blocReviewsAndAvatar: {
     flexDirection: "row",
