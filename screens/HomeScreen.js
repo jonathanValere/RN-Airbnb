@@ -31,7 +31,7 @@ export default function HomeScreen({ navigation }) {
     fetchData();
   }, []);
 
-  const Room = ({ title, photos, price, avatar, reviews, ratings }) => {
+  const Room = ({ title, photos, price, avatar, reviews, ratings, id }) => {
     let ratingsStar = [];
     for (let numStar = 0; numStar < 5; numStar++) {
       if (numStar < ratings) {
@@ -42,7 +42,18 @@ export default function HomeScreen({ navigation }) {
     }
 
     return (
-      <Pressable onPress={() => navigation.navigate("Room")}>
+      <Pressable
+        onPress={async () => {
+          try {
+            const { data } = await axios.get(
+              `https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms/${id}`
+            );
+            return navigation.navigate("Room", { dataRoom: data });
+          } catch (error) {
+            console.log(error);
+          }
+        }}
+      >
         <View style={styles.blocImage}>
           <Image source={{ uri: photos }} style={styles.thumbnail} />
           <Text style={styles.price}>{price} €</Text>
@@ -83,6 +94,7 @@ export default function HomeScreen({ navigation }) {
             avatar={item.user.account.photo.url}
             ratings={item.ratingValue}
             reviews={item.reviews}
+            id={item._id}
           />
         )}
         ItemSeparatorComponent={() => <View style={styles.separator}></View>}
