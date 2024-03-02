@@ -32,18 +32,7 @@ export default function Room({
   // -----
 
   return (
-    <Pressable
-      onPress={async () => {
-        try {
-          const { data } = await axios.get(
-            `https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms/${id}`
-          );
-          return navigation.navigate("Room", { dataRoom: data });
-        } catch (error) {
-          console.log(error);
-        }
-      }}
-    >
+    <Pressable onPress={() => navigation.navigate("Room", { id: id })}>
       <View style={styles.blocImage}>
         <Image source={{ uri: photos }} style={styles.thumbnail} />
         <Text style={styles.price}>{price} €</Text>

@@ -28,7 +28,11 @@ export default function HomeScreen() {
   }, []);
 
   return isLoading ? (
-    <ActivityIndicator size={"large"} color="#EB5A62" />
+    <ActivityIndicator
+      size={"large"}
+      color="#EB5A62"
+      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+    />
   ) : (
     <View style={styles.container}>
       <FlatList
