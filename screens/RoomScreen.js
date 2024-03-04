@@ -38,7 +38,7 @@ export default function RoomScreen({ route }) {
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   const listStar = (rating) => {
     const ratingStar = [];

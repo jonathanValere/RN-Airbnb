@@ -30,7 +30,7 @@ export default function HomeScreen() {
   return isLoading ? (
     <ActivityIndicator
       size={"large"}
-      color="#EB5A62"
+      color={colors.PRIMARY}
       style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
     />
   ) : (
