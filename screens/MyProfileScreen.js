@@ -134,8 +134,11 @@ export default function MyProfile({ setToken, userToken, ...props }) {
         <Pressable style={styles.containerBtn} onPress={handleUpdate}>
           <Text style={styles.btn}>Update</Text>
         </Pressable>
-        <Pressable style={styles.containerBtn} onPress={() => setToken(null)}>
-          <Text style={[styles.btn, styles.btnLogout]}>Log out</Text>
+        <Pressable
+          style={[styles.containerBtn, styles.btnLogout]}
+          onPress={() => setToken(null)}
+        >
+          <Text style={[styles.btn, styles.textLogout]}>Log out</Text>
         </Pressable>
       </View>
     </View>
@@ -188,6 +191,7 @@ const styles = StyleSheet.create({
   containerBtn: {
     marginTop: 20,
     width: 180,
+    borderRadius: 28,
   },
   btn: {
     borderRadius: 28,
@@ -200,8 +204,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.PRIMARY,
   },
   btnLogout: {
-    borderRadius: 28,
-    color: Colors.WHITE,
     backgroundColor: Colors.PRIMARY,
+  },
+  textLogout: {
+    color: Colors.WHITE,
   },
 });
