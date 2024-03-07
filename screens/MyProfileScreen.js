@@ -1,5 +1,6 @@
 import axios from "axios";
 import { FontAwesome5 } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 import { useState, useEffect } from "react";
 import {
@@ -37,13 +38,42 @@ export default function MyProfile({ setToken, userToken, ...props }) {
         setUsername(data.username);
         setEmail(data.email);
         setDescription(data.description);
-        setIsLoading(false);
+        if (data.photo) {
+          setAvatar(data.photo);
+        }
       } catch (error) {
         console.log(error.response);
       }
+      setIsLoading(false);
     };
     fetchData();
   }, []);
+
+  // Gestion d'une photo avatar ---
+  const getPermissionAndGetPicture = async () => {
+    // Demander le droit d'accéder à la galerie
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status === "granted") {
+      // Ouvrir la galerie photo
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [1, 1],
+      });
+
+      if (result.canceled === true) {
+        alert("Pas de photo sélectionnée");
+      } else {
+        setAvatar(result.assets[0].uri);
+      }
+    } else {
+      alert("Permission refusée");
+    }
+  };
+
+  // Gestion update ---
+  const handleUpdate = () => {
+    return console.log("updated");
+  };
 
   return isLoading ? (
     <ActivityIndicator
@@ -59,10 +89,19 @@ export default function MyProfile({ setToken, userToken, ...props }) {
     <View style={styles.container}>
       <View style={styles.containerAvatar}>
         <View style={styles.avatar}>
-          <FontAwesome5 name="user-alt" size={80} color={Colors.LIGHTGREY} />
+          {!avatar ? (
+            <FontAwesome5 name="user-alt" size={80} color={Colors.LIGHTGREY} />
+          ) : (
+            <Image
+              source={{ uri: avatar }}
+              width={150}
+              height={150}
+              style={styles.avatar}
+            />
+          )}
         </View>
         <View style={styles.linkAvatar}>
-          <Pressable onPress={() => alert("Choisir une image")}>
+          <Pressable onPress={getPermissionAndGetPicture}>
             <FontAwesome5 name="images" size={28} color={Colors.LIGHTGREY} />
           </Pressable>
           <Pressable onPress={() => alert("ouvrir caméra")}>
@@ -92,7 +131,7 @@ export default function MyProfile({ setToken, userToken, ...props }) {
         />
       </View>
       <View style={styles.buttons}>
-        <Pressable style={styles.containerBtn} onPress={() => alert("updated")}>
+        <Pressable style={styles.containerBtn} onPress={handleUpdate}>
           <Text style={styles.btn}>Update</Text>
         </Pressable>
         <Pressable style={styles.containerBtn} onPress={() => setToken(null)}>
