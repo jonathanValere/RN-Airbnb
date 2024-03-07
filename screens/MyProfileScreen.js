@@ -47,7 +47,7 @@ export default function MyProfileScreen({
           setAvatar(data.photo);
         }
       } catch (error) {
-        console.log(error.response);
+        console.log("ERROR >>>", error.response.data);
       }
       setIsLoading(false);
     };
@@ -67,6 +67,22 @@ export default function MyProfileScreen({
 
       if (result.canceled === true) {
         alert("Pas de photo sélectionnée");
+      } else {
+        setAvatar(result.assets[0].uri);
+      }
+    } else {
+      alert("Permission refusée");
+    }
+  };
+
+  // Gestion de la caméra --
+  const getPermissionAndTakePicture = async () => {
+    // Demander le droit d'accéder
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status === "granted") {
+      const result = await ImagePicker.launchCameraAsync();
+      if (result.canceled === true) {
+        alert("pas de photo sélectionnée");
       } else {
         setAvatar(result.assets[0].uri);
       }
@@ -109,7 +125,7 @@ export default function MyProfileScreen({
           <Pressable onPress={getPermissionAndGetPicture}>
             <FontAwesome5 name="images" size={28} color={Colors.LIGHTGREY} />
           </Pressable>
-          <Pressable onPress={() => alert("ouvrir caméra")}>
+          <Pressable onPress={getPermissionAndTakePicture}>
             <FontAwesome5 name="camera" size={28} color={Colors.LIGHTGREY} />
           </Pressable>
         </View>
