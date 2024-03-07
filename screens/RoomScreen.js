@@ -25,6 +25,7 @@ export default function RoomScreen({ route }) {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const { data } = await axios.get(
           `https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms/${id}`

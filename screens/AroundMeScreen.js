@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { Foundation } from "@expo/vector-icons";
 
 import colors from "../utils/Colors";
 
@@ -11,20 +10,23 @@ export default function AroundMe({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [listRooms, setListRooms] = useState([]);
   const [error, setError] = useState("");
-  const [coords, setCoords] = useState({});
-  const iconLocalization = <Foundation name="marker" size={18} color="black" />;
+  const [coords, setCoords] = useState({
+    latitude: 48.8564449,
+    longitude: 2.4002913,
+  });
+  // const iconLocalization = <Foundation name="marker" size={18} color="black" />;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms"
-        );
-        setListRooms(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    // const fetchData = async () => {
+    //   try {
+    //     const { data } = await axios.get(
+    //       "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms"
+    //     );
+    //     setListRooms(data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
 
     const askPermission = async () => {
       try {
@@ -32,25 +34,30 @@ export default function AroundMe({ navigation }) {
         // console.log(status);
         if (status === "granted") {
           // Récupérer la position de l'utilisateur ---
-          // let location = await Location.getCurrentPositionAsync();
-          // const coordsUser = {
-          //   latitude: location.coords.latitude,
-          //   longitude: location.coords.longitude,
-          // };
+          const location = await Location.getCurrentPositionAsync();
+          const coordsUser = {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          };
 
           // Par défaut (Paris)
-          const coordsUser = {
-            latitude: 48.8564449,
-            longitude: 2.4002913,
-          };
+          // const coordsUser = {
+          //   latitude: 48.8564449,
+          //   longitude: 2.4002913,
+          // };
           setCoords(coordsUser);
 
           const { data } = await axios.get(
             `https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms/around?latitude=${coordsUser.latitude}&longitude=${coordsUser.longitude}`
           );
-          // console.log(JSON.stringify(data, null, 2));
+          console.log(data[0].location); // => A REGARDER
+          setListRooms(data);
         } else {
-          setError(true);
+          const { data } = await axios.get(
+            "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/rooms"
+          );
+          setListRooms(data);
+          // setError(true);
         }
       } catch (error) {
         console.log(error.response);
@@ -59,12 +66,7 @@ export default function AroundMe({ navigation }) {
     };
 
     askPermission();
-    fetchData();
   }, []);
-
-  const greeting = () => {
-    return console.log("hello");
-  };
 
   return isLoading ? (
     <ActivityIndicator
@@ -97,6 +99,7 @@ export default function AroundMe({ navigation }) {
                 longitude: marker.location[0],
               }}
               onPress={() => navigation.navigate("Room", { id: marker._id })}
+              on
             />
           );
         })}

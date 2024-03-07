@@ -13,7 +13,7 @@ import { Pressable, Text } from "react-native";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-export default function TabScreen({ navigation, setToken }) {
+export default function TabScreen({ navigation, setToken, userToken }) {
   const screenOptions = {
     tabBarStyle: { backgroundColor: "#fff" },
     tabBarLabelStyle: { fontSize: 12, color: "#000" },
@@ -87,7 +87,9 @@ export default function TabScreen({ navigation, setToken }) {
           ),
         }}
       >
-        {(props) => <MyProfile {...props} setToken={setToken} />}
+        {(props) => (
+          <MyProfile {...props} setToken={setToken} userToken={userToken} />
+        )}
       </Tab.Screen>
     </Tab.Navigator>
   );
