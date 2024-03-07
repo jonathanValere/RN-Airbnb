@@ -58,7 +58,7 @@ export default function SignInScreen({ navigation, setToken }) {
         }
       );
       setErrorMessage("");
-      setToken(response.data.token);
+      setToken(response.data.token, response.data.id);
     } catch (error) {
       return alert(error.response.data.error);
     }

@@ -6,14 +6,15 @@ import colors from "../utils/Colors";
 
 import HomeScreen from "./HomeScreen";
 import RoomScreen from "./RoomScreen";
-import MyProfile from "./MyProfileScreen";
+// import MyProfile from "./MyProfileScreen";
 import AroundMeScreen from "./AroundMeScreen";
 import { Pressable, Text } from "react-native";
+import MyProfileScreen from "./MyProfileScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-export default function TabScreen({ navigation, setToken, userToken }) {
+export default function TabScreen({ navigation, setToken, userToken, userId }) {
   const screenOptions = {
     tabBarStyle: { backgroundColor: "#fff" },
     tabBarLabelStyle: { fontSize: 12, color: "#000" },
@@ -88,7 +89,12 @@ export default function TabScreen({ navigation, setToken, userToken }) {
         }}
       >
         {(props) => (
-          <MyProfile {...props} setToken={setToken} userToken={userToken} />
+          <MyProfileScreen
+            {...props}
+            setToken={setToken}
+            userToken={userToken}
+            userId={userId}
+          />
         )}
       </Tab.Screen>
     </Tab.Navigator>

@@ -11,6 +11,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [userToken, setUserToken] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // ScreenOptions ---
@@ -24,13 +25,16 @@ export default function App() {
   };
   // -----
 
-  const setToken = async (token) => {
+  const setToken = async (token, id) => {
     if (token) {
       await AsyncStorage.setItem("userToken", token);
+      await AsyncStorage.setItem("userId", id);
     } else {
       await AsyncStorage.removeItem("userToken");
+      await AsyncStorage.removeItem("userId");
     }
 
+    setUserId(id);
     setUserToken(token);
   };
 
@@ -76,6 +80,7 @@ export default function App() {
                   {...props}
                   setToken={setToken}
                   userToken={userToken}
+                  userId={userId}
                 />
               )}
             </Stack.Screen>

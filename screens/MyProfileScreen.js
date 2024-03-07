@@ -15,7 +15,12 @@ import {
 
 import Colors from "../utils/Colors";
 
-export default function MyProfile({ setToken, userToken, ...props }) {
+export default function MyProfileScreen({
+  setToken,
+  userToken,
+  userId,
+  ...props
+}) {
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -28,7 +33,7 @@ export default function MyProfile({ setToken, userToken, ...props }) {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(
-          `https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/65e8caf6730047bb56662a3d`,
+          `https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${userToken}`,

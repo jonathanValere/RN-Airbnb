@@ -43,7 +43,7 @@ export default function SignInScreen({ navigation, setToken }) {
       if (response.data.email === email && password === "pass") {
         setErrorMessage(false);
         // Stocker le token dans la mémoire de l'appareil
-        setToken(response.data.token);
+        setToken(response.data.token, response.data.id);
       } else {
         alert("Email or password error");
       }
