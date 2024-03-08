@@ -39,6 +39,7 @@ export default function HomeScreen() {
         data={listRooms}
         style={styles.list}
         keyExtractor={(item) => item._id}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <Room
             title={item.title}
