@@ -15,12 +15,7 @@ import {
 
 import Colors from "../utils/Colors";
 
-export default function MyProfileScreen({
-  setToken,
-  userToken,
-  userId,
-  ...props
-}) {
+export default function MyProfileScreen({ setToken, userToken, userId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -93,7 +88,6 @@ export default function MyProfileScreen({
 
   // Gestion update ---
   const handleUpdate = async () => {
-    console.log("avatar >>>>", avatar);
     try {
       // Gestion des champs du formulaire --
       const { data } = await axios.put(

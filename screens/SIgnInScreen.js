@@ -23,29 +23,17 @@ export default function SignInScreen({ navigation, setToken }) {
   const handleSignIn = async () => {
     try {
       // Vérification que les champs sont remplis
-      if (!email || !password) {
-        return setErrorMessage(!errorMessage);
-      }
-      // Envoie de la requête d'authentification
-      const response = await axios.post(
-        "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/log_in",
-        {
-          email: email,
-          password: password,
-        },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.data.email === email && password === "pass") {
+      if (email && password) {
+        const { data } = await axios.post(
+          "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/log_in",
+          { email, password }
+        );
+        console.log("Sign in - data >>", data);
         setErrorMessage(false);
-        // Stocker le token dans la mémoire de l'appareil
-        setToken(response.data.token, response.data.id);
+        // Stocker dans la mémoire de l'appareil
+        setToken(data.token, data.id);
       } else {
-        alert("Email or password error");
+        setErrorMessage(!errorMessage);
       }
     } catch (error) {
       console.log("Error >>>>", error.response.data.error);
