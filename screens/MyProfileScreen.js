@@ -43,8 +43,8 @@ export default function MyProfileScreen({
         setUsername(data.username);
         setEmail(data.email);
         setDescription(data.description);
-        if (data.photo) {
-          setAvatar(data.photo);
+        if (data.photo?.url) {
+          setAvatar(data.photo.url);
         }
       } catch (error) {
         console.log("ERROR >>>", error.response.data);
@@ -93,6 +93,7 @@ export default function MyProfileScreen({
 
   // Gestion update ---
   const handleUpdate = async () => {
+    console.log("avatar >>>>", avatar);
     try {
       // Gestion des champs du formulaire --
       const { data } = await axios.put(
@@ -106,7 +107,36 @@ export default function MyProfileScreen({
           headers: { Authorization: `Bearer ${userToken}` },
         }
       );
-      console.log("Profile updated!", data.description);
+
+      // Gestion avatar --
+      // ⚠️ PROBLEME, A CHAQUE PRESS UPDATE, CELA ME CREE UN NOUVEAU LIEN AVATAR, MEME SI L'IMAGE EST IDENTIQUE
+      if (avatar) {
+        setIsLoading(true);
+        const tab = avatar.split(".");
+
+        const formData = new FormData();
+        formData.append("photo", {
+          uri: avatar,
+          name: `my-avatar.${tab[tab.length - 1]}`,
+          type: `image/${tab[tab.length - 1]}`,
+        });
+
+        const response = await axios.put(
+          "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/upload_picture",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
+
+        if (response.data) {
+          setIsLoading(false);
+        }
+      }
+      alert("Profile updated!");
     } catch (error) {
       console.log(error);
     }
