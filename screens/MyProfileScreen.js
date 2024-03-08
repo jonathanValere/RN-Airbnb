@@ -92,8 +92,24 @@ export default function MyProfileScreen({
   };
 
   // Gestion update ---
-  const handleUpdate = () => {
-    return console.log("updated");
+  const handleUpdate = async () => {
+    try {
+      // Gestion des champs du formulaire --
+      const { data } = await axios.put(
+        "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/update",
+        {
+          email,
+          username,
+          description,
+        },
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        }
+      );
+      console.log("Profile updated!", data.description);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return isLoading ? (
@@ -132,16 +148,18 @@ export default function MyProfileScreen({
       </View>
       <View>
         <TextInput
-          style={styles.input}
+          style={[styles.input, styles.noEditable]}
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
+          editable={false}
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, styles.noEditable]}
           value={username}
           onChangeText={setUsername}
           autoCapitalize="none"
+          editable={false}
         />
         <TextInput
           style={styles.description}
@@ -193,9 +211,13 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingVertical: 10,
+    paddingHorizontal: 5,
     borderBottomWidth: 1,
     borderBottomColor: Colors.PRIMARY,
     marginBottom: 30,
+  },
+  noEditable: {
+    backgroundColor: "#e9ecef",
   },
   description: {
     padding: 10,
@@ -220,7 +242,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 15,
     width: "100%",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     borderColor: Colors.PRIMARY,
   },
