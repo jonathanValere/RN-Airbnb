@@ -93,8 +93,6 @@ export default function MyProfileScreen({ setToken, userToken, userId }) {
       const { data } = await axios.put(
         "https://lereacteur-bootcamp-api.herokuapp.com/api/airbnb/user/update",
         {
-          email,
-          username,
           description,
         },
         {
@@ -104,7 +102,7 @@ export default function MyProfileScreen({ setToken, userToken, userId }) {
 
       // Gestion avatar --
       // ⚠️ PROBLEME, A CHAQUE PRESS UPDATE, CELA ME CREE UN NOUVEAU LIEN AVATAR, MEME SI L'IMAGE EST IDENTIQUE
-      if (avatar) {
+      if (!avatar.includes("https")) {
         setIsLoading(true);
         const tab = avatar.split(".");
 
@@ -132,9 +130,11 @@ export default function MyProfileScreen({ setToken, userToken, userId }) {
       }
       alert("Profile updated!");
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
     }
   };
+
+  console.log("avatar >>>", avatar);
 
   return isLoading ? (
     <ActivityIndicator
